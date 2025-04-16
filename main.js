@@ -8,6 +8,14 @@ const treasures = [], obstacles = [], enemies = [];
 let torch, isNight = false;
 const clock = new THREE.Clock();
 
+let hearts = 7;
+function updateHearts() {
+  const heartText = '❤️'.repeat(hearts);
+  document.getElementById('hearts').textContent = heartText;
+}
+updateHearts();
+
+
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('webgl');
 renderer = new THREE.WebGLRenderer({ canvas, context });
@@ -134,7 +142,7 @@ window.addEventListener('click', () => {
 
 function updateControls(delta) {
   const speed = 10;
-  velocity.x = velocity.z = 0;
+  
   if (move.forward) velocity.z -= speed * delta;
   if (move.backward) velocity.z += speed * delta;
   if (move.left) velocity.x -= speed * delta;
@@ -151,6 +159,21 @@ function updateControls(delta) {
   controls.moveRight(velocity.x * delta);
   controls.moveForward(velocity.z * delta);
   controls.getObject().position.y += velocity.y * delta;
+}
+
+
+function checkEnemyCollision() {
+  for (const enemy of enemies) {
+    const dist = enemy.position.distanceTo(controls.getObject().position);
+    if (dist < 2) {
+      hearts--;
+      updateHearts();
+      if (hearts <= 0) {
+        document.getElementById('gameOverScreen').style.display = 'flex';
+        controls.unlock();
+      }
+    }
+  }
 }
 
 function updateEnemies(delta) {
@@ -173,6 +196,7 @@ function animate() {
   const delta = clock.getDelta();
   updateControls(delta);
   updateEnemies(delta);
+  checkEnemyCollision();
   updateDayNight(clock.elapsedTime);
   renderer.render(scene, camera);
 }
