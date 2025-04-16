@@ -1,3 +1,7 @@
-theme: jekyll-theme-modernist
-title: jdot's website homepage
-description: nothing to see!
+# _config.yml
+
+title: 3Dot Ultimate Treasure Hunt
+description: A WebGL-based 3D treasure hunt game using Three.js
+theme: jekyll-theme-cayman  # You can change this to any GitHub Pages supported theme
+show_downloads: true
+google_analytics:
