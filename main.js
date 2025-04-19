@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
+import * as THREE from 'node_modules/three';
+import { PointerLockControls } from 'node_modules/three/examples/jsm/controls/PointerLockControls.js';
 
 let scene, camera, renderer, controls;
 let treasureCount = 0;
